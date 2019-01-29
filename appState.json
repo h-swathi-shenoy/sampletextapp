@@ -1,0 +1,108 @@
+{
+  "EDITOR_STATE": {
+    "allProjectFiles": {
+      "2bdd990c-7ae1-4411-ab15-d8397a71f705": {
+        "id": "2bdd990c-7ae1-4411-ab15-d8397a71f705",
+        "parent": null,
+        "name": "sampletextapp",
+        "type": "DIRECTORY",
+        "isDirectory": true,
+        "children": [
+          "88e23488-d44c-4b28-960c-a25bd4ac3174"
+        ],
+        "isRemovable": false,
+        "filePath": "sampletextapp"
+      },
+      "88e23488-d44c-4b28-960c-a25bd4ac3174": {
+        "id": "88e23488-d44c-4b28-960c-a25bd4ac3174",
+        "parent": "2bdd990c-7ae1-4411-ab15-d8397a71f705",
+        "name": "lambda.js",
+        "type": "LAMBDA_FILE",
+        "isDirectory": false,
+        "children": [],
+        "isRemovable": true,
+        "filePath": "sampletextapp/lambda.js",
+        "code": "let AWS = require('aws-sdk');\nconst sns = new AWS.SNS();\n\nexports.handler = function (event, context, callback) {\n\n    let receiver = event['receiver'];\n    let sender = event['sender'];\n    let message = event['message'];\n\n    sns.publish({\n        Message: message,\n        MessageAttributes: {\n            'AWS.SNS.SMS.SMSType': {\n                DataType: 'String',\n                StringValue: 'Promotional'\n            },\n            'AWS.SNS.SMS.SenderID': {\n                DataType: 'String',\n                StringValue: sender\n            },\n        },\n        PhoneNumber: receiver\n    }).promise()\n        .then(data => {\n            // your code goes here\n        })\n        .catch(err => {\n            // error handling goes here\n        });\n    console.log(\"Sending message\", message, \"to receiver\", receiver);\n\n    callback(null, 'Successfully executed');\n}",
+        "triggers": [
+          {
+            "resourceName": "apigusEast1SMSGatewaysendSMSpost",
+            "config": {}
+          }
+        ],
+        "config": {
+          "runtime": "nodejs8.10",
+          "timeout": 60,
+          "memory": 128
+        }
+      }
+    },
+    "deletedFiles": [],
+    "rootNode": "2bdd990c-7ae1-4411-ab15-d8397a71f705",
+    "openFiles": [
+      "88e23488-d44c-4b28-960c-a25bd4ac3174"
+    ],
+    "currentFileId": "88e23488-d44c-4b28-960c-a25bd4ac3174",
+    "resources": {
+      "apigusEast1SMSGatewaysendSMSpost": {
+        "name": "apigusEast1SMSGatewaysendSMSpost",
+        "type": "API_GATEWAY",
+        "config": {
+          "selectedRegion": "us-east-1",
+          "apiMode": 0,
+          "apiName": "SMSGateway",
+          "endpointType": "EDGE",
+          "resourceMode": 0,
+          "resourceName": "sendSMS",
+          "resourcePath": "/sendSMS",
+          "restMethod": "POST",
+          "proxyIntegration": false,
+          "enableCORS": false,
+          "stageMode": 0,
+          "stageName": "prod"
+        },
+        "globallyEditable": false
+      },
+      "snsDirectSMSResource": {
+        "name": "snsDirectSMSResource",
+        "type": "SNS",
+        "config": {
+          "snsType": 1,
+          "numbers": [
+            "@{receiver}"
+          ]
+        },
+        "globallyEditable": false
+      }
+    },
+    "envVariables": [
+      {
+        "lambdaId": "all",
+        "varKey": "SIGMA_AWS_ACC_ID",
+        "varValue": null,
+        "shouldPersist": false,
+        "displayOnly": false,
+        "editable": false
+      }
+    ],
+    "packageJSON": {
+      "dependencies": {}
+    },
+    "lambdaId": "88e23488-d44c-4b28-960c-a25bd4ac3174"
+  },
+  "PROJECT_META": {
+    "projectName": "sampletextapp",
+    "projectDescription": "sampletextapp",
+    "projectVersion": "1.0.0",
+    "projectRegion": "us-east-1",
+    "platform": "AWS",
+    "platformRegions": {},
+    "lastSave": 1548784411136
+  },
+  "VCS_STATE": {
+    "provider": "GitHub",
+    "repo": {
+      "name": "sampletextapp",
+      "url": "https://github.com/h-swathi-shenoy/sampletextapp"
+    }
+  }
+}
